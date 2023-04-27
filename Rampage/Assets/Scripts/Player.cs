@@ -5,15 +5,53 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    
+    // Projectile Speed
     [SerializeField]
     private float moveSpeed = 27.5f;
+
+    // RigidBody
     private Rigidbody2D rb;
- 
-    // Start is called before the first frame update
+
+    // Projectile object
+    [SerializeField]
+    private GameObject projectile;
+
+    // Fire point transorms
+    [SerializeField]
+    private Transform leftTransform;
+    [SerializeField]
+    private Transform leftTransform2;
+    [SerializeField]
+    private Transform rightTransform;
+    [SerializeField]
+    private Transform rightTransform2;
+    [SerializeField]
+    private Transform upTransform;
+    [SerializeField]
+    private Transform upTransform2;
+    [SerializeField]
+    private Transform downTransform;
+    [SerializeField]
+    private Transform downTransform2;
+
+    // Bool for if the player can shoot
+    private bool canFire = true;
+
+    // Timer for shooting cooldown
+    private float fireTimer;
+
+
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    //  START
+    //--------------------------------------------------------------------------------------------------------------------------------------
     void Start()
     {
         // Get Rigid body
         rb = GetComponent<Rigidbody2D>();
+
+        // Get projectile
+       // projectile = GameObject.FindWithTag("Projectile");
 
     }
 
@@ -21,6 +59,12 @@ public class Player : MonoBehaviour
     void SetVelocity(float xVel, float yVel)
     {
         rb.velocity = new Vector2(xVel * moveSpeed, yVel * moveSpeed);
+    }
+
+    void SpawnProjectile(Transform spawnPoint1, Transform spawnPoint2)
+    {
+        Instantiate(projectile, spawnPoint1.transform);
+        Instantiate(projectile, spawnPoint2.transform);
     }
 
     void FixedUpdate()
@@ -33,12 +77,82 @@ public class Player : MonoBehaviour
 
         // Set velocity according to axis inputs
         SetVelocity(velocity.x, velocity.y);
-
     }
 
-    // Update is called once per frame
+    private void ShootLeft()
+    {
+        Instantiate(projectile, leftTransform.transform);
+        Instantiate(projectile, leftTransform2.transform);
+    }
+    private void ShootRight()
+    {
+        Instantiate(projectile, rightTransform.transform);
+        Instantiate(projectile, rightTransform2.transform);
+    }
+    private void ShootUp()
+    {
+        Instantiate(projectile, upTransform.transform);
+        Instantiate(projectile, upTransform2.transform);
+    }
+    private void ShootDown()
+    {
+        Instantiate(projectile, downTransform.transform);
+        Instantiate(projectile, downTransform2.transform);
+    }
+
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    //  UPDATE
+    //--------------------------------------------------------------------------------------------------------------------------------------
     void Update()
     {
-        
+        // Start fire timer
+        fireTimer += Time.deltaTime;
+
+        // Check if cooldown has passed....
+        if (fireTimer >= 0.1f)
+        {
+            // Allow player to shoot
+            canFire = true;
+        }
+
+        // Check for shoot inputs
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            if (canFire)
+            {
+                ShootLeft();
+                canFire = false;
+                fireTimer = 0;
+            }
+
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            if (canFire)
+            {
+                ShootRight();
+                canFire = false;
+                fireTimer = 0;
+            }
+
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            if (canFire)
+            {
+                ShootDown();
+                canFire = false;
+                fireTimer = 0;
+            }
+        }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            if (canFire)
+            {
+                ShootUp();
+                canFire = false;
+                fireTimer = 0;
+            }
+        }
     }
 }
