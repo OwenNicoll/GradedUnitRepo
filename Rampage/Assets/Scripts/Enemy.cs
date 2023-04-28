@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
         colourTimer += Time.deltaTime;
 
         // Change color back
-        if (colourTimer >= 0.1f)
+        if (colourTimer >= 0.05f)
         {
             spriteRenderer.color = currentColor;
         }
