@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     protected Color currentColor;
     protected int health = 100;
 
+    protected float despawnTimer;
+
     protected float colourTimer;
 
 
@@ -37,6 +39,8 @@ public class Enemy : MonoBehaviour
     {
         // Start Timers
         colourTimer += Time.deltaTime;
+
+        Debug.Log(despawnTimer);
 
         // Change color back
         if (colourTimer >= 0.05f)
@@ -69,6 +73,22 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // Check if enemy is out of range
+        if(distanceToPlayer >= 100f)
+        {
+            despawnTimer += Time.deltaTime;
+            if (despawnTimer >= 5)
+            {
+                Destroy(gameObject);
+            }           
+        }
+
+        // Check if enemy is back in range
+        if (distanceToPlayer <= 99f)
+        {
+            despawnTimer = 0;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -76,7 +96,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             ChangeColour();
-            health -= 10;
+            health -= 20;
             Destroy(collision.gameObject);
         }
     }
