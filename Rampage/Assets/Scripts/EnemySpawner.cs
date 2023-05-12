@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 
-    private float minDistance = 40f;
-    private float maxDistance = 45f;
+    private float minDistance = 45f;
+    private float maxDistance = 46f;
 
     [SerializeField]
     private GameObject enemy;

@@ -41,6 +41,11 @@ public class Player : MonoBehaviour
     // Timer for shooting cooldown
     private float fireTimer;
 
+    private bool movingRight;
+    private bool movingLeft;
+    private bool movingUp;
+    private bool movingDown;
+
 
     //--------------------------------------------------------------------------------------------------------------------------------------
     //  START
@@ -77,6 +82,47 @@ public class Player : MonoBehaviour
 
         // Set velocity according to axis inputs
         SetVelocity(velocity.x, velocity.y);
+
+        // Check for moving right
+        if(horizontalInput > 0)
+        {
+            movingRight = true;
+        }
+        else
+        {
+            movingRight = false;
+        }
+
+        // Check for moving left
+        if (horizontalInput < 0)
+        {
+            movingLeft = true;
+        }
+        else
+        {
+            movingLeft = false;
+        }
+
+        // Check for moving up
+        if (verticalInput > 0)
+        {
+            movingUp = true;
+        }
+        else
+        {
+            movingUp = false;
+        }
+
+        // Check for moving down
+        if(verticalInput < 0)
+        {
+            movingDown = true;
+        }
+        else
+        {
+            movingDown = false;
+        }
+
     }
 
     private void ShootLeft()
@@ -105,6 +151,8 @@ public class Player : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------
     void Update()
     {
+       
+
         // Start fire timer
         fireTimer += Time.deltaTime;
 
