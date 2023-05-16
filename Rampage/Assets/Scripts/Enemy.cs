@@ -12,12 +12,15 @@ public class Enemy : MonoBehaviour
     protected float distanceToPlayer;
     protected SpriteRenderer spriteRenderer;
     protected Color currentColor;
-    protected int health = 100;
+    protected int health = 50;
 
     protected float despawnTimer;
 
     protected float colourTimer;
 
+    protected Sprite enemySprite;
+    [SerializeField]
+    protected Sprite damageSprite;
 
 
     // Start is called before the first frame update
@@ -32,6 +35,9 @@ public class Enemy : MonoBehaviour
         // Get sprite renderer
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentColor = spriteRenderer.color;
+
+        enemySprite = spriteRenderer.sprite;
+        
     }
 
     // Update is called once per frame
@@ -40,12 +46,12 @@ public class Enemy : MonoBehaviour
         // Start Timers
         colourTimer += Time.deltaTime;
 
-        Debug.Log(despawnTimer);
+        
 
         // Change color back
         if (colourTimer >= 0.05f)
         {
-            spriteRenderer.color = currentColor;
+            spriteRenderer.sprite = enemySprite;
         }
 
         // Get player direction
@@ -96,15 +102,20 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             ChangeColour();
-            health -= 20;
-            Destroy(collision.gameObject);
+           // health -= 20;
+           // Destroy(collision.gameObject);
         }
     }
 
     private void ChangeColour()
     {
        
-        spriteRenderer.color = Color.white;
+        spriteRenderer.sprite = damageSprite;
         colourTimer = 0;
+    }
+
+    public void RemoveHealth(int healthToRemove)
+    {
+        health -= healthToRemove;
     }
 }

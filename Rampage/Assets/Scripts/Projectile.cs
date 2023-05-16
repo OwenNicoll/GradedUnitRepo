@@ -40,9 +40,23 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check if the bullet collided with an obstacle
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            // Destroy the bullet
+            Destroy(gameObject);
+        }
+
+        // Check if the bullet collided with an enemy
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Remove health from the enemy
+            collision.gameObject.GetComponent<Enemy>().RemoveHealth(10);
+
+            // Destroy bullet
             Destroy(gameObject);
         }
     }
+
+    
 }
