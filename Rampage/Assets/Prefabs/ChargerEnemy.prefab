@@ -101,7 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.2
-  damageSprite: {fileID: 0}
+  damageSprite: {fileID: 21300000, guid: 5806de93e2ef60148b66984b9167c64d, type: 3}
+  scorePickup: {fileID: 4371030463298501313, guid: 7cc55d8bcc9031a43866378e27eb2023, type: 3}
 --- !u!58 &4355837908731329662
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -153,3 +154,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   damageSprite: {fileID: 0}
+  scorePickup: {fileID: 4371030463298501313, guid: 7cc55d8bcc9031a43866378e27eb2023, type: 3}

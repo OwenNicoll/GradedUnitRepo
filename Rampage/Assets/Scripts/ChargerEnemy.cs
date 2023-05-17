@@ -7,6 +7,8 @@ public class ChargerEnemy : Enemy
     private bool isBacktracking = false;
     private float backtrackTimer;
 
+   
+
 
     // Start is called before the first frame update
 
@@ -81,10 +83,21 @@ public class ChargerEnemy : Enemy
         // Check for enemy death
         if (health <= 0)
         {
+            SpawnScore();
             Destroy(gameObject);
         }
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
+        {
+            ChangeColour();
+            // health -= 20;
+            // Destroy(collision.gameObject);
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

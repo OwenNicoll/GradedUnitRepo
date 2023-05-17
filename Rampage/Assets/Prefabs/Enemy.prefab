@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.15
   damageSprite: {fileID: 21300000, guid: c5a2c2fe69884d84aa9ef72ccadd1dba, type: 3}
+  scorePickup: {fileID: 4371030463298501313, guid: 7cc55d8bcc9031a43866378e27eb2023, type: 3}
 --- !u!58 &-5260426415200125885
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -7,9 +7,13 @@ public class EnemySpawner : MonoBehaviour
 
     private float minDistance = 50f;
     private float maxDistance = 52f;
+    private float spawnChance;
 
     [SerializeField]
     private GameObject enemy;
+
+    [SerializeField]
+    private GameObject chargerEnemy;
 
     private float spawnTimer;
 
@@ -29,7 +33,22 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy(Vector3 position)
     {
-        Instantiate(enemy, position, Quaternion.identity);
+        // Generate random number
+        spawnChance = Random.Range(0f, 1f);
+
+        // 90% chance to spawn regular enemy
+        if (spawnChance <= 0.9)
+        {
+             Instantiate(enemy, position, Quaternion.identity);
+            
+        }
+
+        // 10% chance to spawn charger enemy
+        else
+        {
+            Instantiate(chargerEnemy, position, Quaternion.identity);
+        }
+                        
     }
 
    

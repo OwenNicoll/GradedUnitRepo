@@ -22,6 +22,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected Sprite damageSprite;
 
+    [SerializeField]
+    protected GameObject scorePickup;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +80,7 @@ public class Enemy : MonoBehaviour
         // Check for enemy death
         if(health <= 0)
         {
+            SpawnScore();
             Destroy(gameObject);
         }
 
@@ -107,7 +111,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void ChangeColour()
+    protected void ChangeColour()
     {
        
         spriteRenderer.sprite = damageSprite;
@@ -117,5 +121,10 @@ public class Enemy : MonoBehaviour
     public void RemoveHealth(int healthToRemove)
     {
         health -= healthToRemove;
+    }
+
+    public void SpawnScore()
+    {
+        Instantiate(scorePickup, transform.position, Quaternion.identity);
     }
 }
