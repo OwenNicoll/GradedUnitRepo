@@ -25,6 +25,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject scorePickup;
 
+    [SerializeField]
+    protected GameObject fuelPowerup;
+    [SerializeField]
+    protected GameObject healthPowerup;
+    [SerializeField]
+    protected GameObject burstPowerup;
+
+    protected float spawnChance;
+
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +90,8 @@ public class Enemy : MonoBehaviour
         if(health <= 0)
         {
             SpawnScore();
+            SpawnPowerup();
+            
             Destroy(gameObject);
         }
 
@@ -111,6 +122,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check for collision with player
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Remove health from player
+            collision.gameObject.GetComponent<Player>().RemoveHealth(10);
+        }
+    }
+
     protected void ChangeColour()
     {
        
@@ -127,4 +148,39 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(scorePickup, transform.position, Quaternion.identity);
     }
+
+    public void SpawnFuel()
+    {
+        Instantiate(fuelPowerup, transform.position, Quaternion.identity);
+    }
+    public void SpawnHealth()
+    {
+        Instantiate(healthPowerup, transform.position, Quaternion.identity);
+    }
+    public void SpawnBurst()
+    {
+        Instantiate(burstPowerup, transform.position, Quaternion.identity);
+    }
+    public void SpawnPowerup()
+    {
+        spawnChance = Random.Range(0f, 1f);
+
+        if(spawnChance >= 0.9)
+        {
+            if(spawnChance <= 0.94)
+            {
+                SpawnFuel();
+            }
+            if(spawnChance <= 0.98 && spawnChance >0.94)
+            {
+                SpawnHealth();
+            }
+           if(spawnChance > 0.98 && spawnChance <= 1)
+            {
+                SpawnBurst();
+            }
+           
+        }
+    }
+    
 }

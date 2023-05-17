@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 
 public class Player : MonoBehaviour
 {
-    
+
+    private int score;
+
+    private int health = 100;
+
     // Projectile Speed
     [SerializeField]
     private float moveSpeed = 27.5f;
@@ -41,10 +47,28 @@ public class Player : MonoBehaviour
     // Timer for shooting cooldown
     private float fireTimer;
 
-    private bool movingRight;
-    private bool movingLeft;
-    private bool movingUp;
-    private bool movingDown;
+
+    // Fuel
+    private int fuel = 100;
+    private float fuelDrainRate = 1f;
+    private float fuelTimer = 0;
+
+
+
+     private bool movingRight;
+     private bool movingLeft;
+     private bool movingUp;
+     private bool movingDown;
+
+    
+    public Text fuelText;
+    public Text healthText;
+
+    private bool burst = false;
+    private float burstTimer;
+    private float burstCooldown;
+
+
 
 
     //--------------------------------------------------------------------------------------------------------------------------------------
@@ -151,7 +175,11 @@ public class Player : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------
     void Update()
     {
-       
+        // Fuel label
+        fuelText.text = "Fuel: " + fuel.ToString();
+
+        // Health label
+        healthText.text = "Health " + health.ToString();
 
         // Start fire timer
         fireTimer += Time.deltaTime;
@@ -162,6 +190,10 @@ public class Player : MonoBehaviour
             // Allow player to shoot
             canFire = true;
         }
+
+        // Drain fuel
+        fuelTimer += Time.deltaTime;
+        DrainFuel();
 
         // Check for shoot inputs
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -202,5 +234,65 @@ public class Player : MonoBehaviour
                 fireTimer = 0;
             }
         }
+
+        
+        if (burst)
+        {
+            
+            burstCooldown += Time.deltaTime;
+            burstTimer += Time.deltaTime;
+            if(burstTimer >= 0.1)
+            {
+                ShootLeft();
+                ShootRight();
+                ShootUp();
+                ShootDown();
+                burstTimer = 0;
+            }
+            if(burstCooldown >= 5)
+            {
+                burstCooldown = 0;
+                burst = false;
+            }
+        }
+    }
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    //  METHODS
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    private void DrainFuel()
+    {
+        if (fuelTimer >= 1)
+        {
+            fuel -= 1;
+            fuelTimer = 0;
+        }
+    }
+
+    // Fuel setter + getter
+    public int GetFuel()
+    {
+        return fuel;
+    }
+    public void SetFuel(int newAmount)
+    {
+        fuel = newAmount;
+    }
+
+    // Health Setter + Getter
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void SetHealth(int newHealth)
+    {
+        health = newHealth;
+    }
+    public void RemoveHealth(int healthToRemove)
+    {
+        health -= healthToRemove;
+    }
+    public void Burst()
+    {
+        burst = true;
     }
 }

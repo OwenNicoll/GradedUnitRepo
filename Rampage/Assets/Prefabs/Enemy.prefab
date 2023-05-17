@@ -123,6 +123,9 @@ MonoBehaviour:
   moveSpeed: 0.15
   damageSprite: {fileID: 21300000, guid: c5a2c2fe69884d84aa9ef72ccadd1dba, type: 3}
   scorePickup: {fileID: 4371030463298501313, guid: 7cc55d8bcc9031a43866378e27eb2023, type: 3}
+  fuelPowerup: {fileID: 4903239863539972226, guid: 63242c1bef875e04e8b55bd29a82b2dd, type: 3}
+  healthPowerup: {fileID: 2044537378130869297, guid: b5c5524efef8b5349ab142a8b0fd4ea2, type: 3}
+  burstPowerup: {fileID: 3862342441068224641, guid: f4930a63cb232784ea0fe4db33b0deb7, type: 3}
 --- !u!58 &-5260426415200125885
 CircleCollider2D:
   m_ObjectHideFlags: 0

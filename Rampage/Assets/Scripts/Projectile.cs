@@ -30,10 +30,9 @@ public class Projectile : MonoBehaviour
         // Check if enough time has passed...
         if (destroyTimer >= 3f)
         {
-            // Destroy the projectile
-          //  Destroy(gameObject);
+            //Destroy the projectile
+            Destroy(gameObject);
         }
-
 
     }
 

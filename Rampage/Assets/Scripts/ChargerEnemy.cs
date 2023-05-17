@@ -15,7 +15,7 @@ public class ChargerEnemy : Enemy
 
     private void Awake()
     {
-        moveSpeed = 0.6f;
+        moveSpeed = 1f;
     }
 
     void Start()
@@ -75,7 +75,7 @@ public class ChargerEnemy : Enemy
 
             if (backtrackTimer >= 4)
             {
-                moveSpeed = 0.6f;
+                moveSpeed = 1f;
                 isBacktracking = false;
             }
         }
@@ -84,6 +84,7 @@ public class ChargerEnemy : Enemy
         if (health <= 0)
         {
             SpawnScore();
+            SpawnPowerup();
             Destroy(gameObject);
         }
     }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4355837908731329661}
   - component: {fileID: 4355837908731329662}
   - component: {fileID: 4355837908731329663}
-  - component: {fileID: 4355837908731329658}
   m_Layer: 0
   m_Name: ChargerEnemy
   m_TagString: Enemy
@@ -100,9 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b872ffe6519d0d49bba26ac4296d873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.2
+  moveSpeed: 1
   damageSprite: {fileID: 21300000, guid: 5806de93e2ef60148b66984b9167c64d, type: 3}
   scorePickup: {fileID: 4371030463298501313, guid: 7cc55d8bcc9031a43866378e27eb2023, type: 3}
+  fuelPowerup: {fileID: 0}
+  healthPowerup: {fileID: 0}
 --- !u!58 &4355837908731329662
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -116,9 +117,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.029760998, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1.4056345
 --- !u!50 &4355837908731329663
 Rigidbody2D:
   serializedVersion: 4
@@ -139,19 +140,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!114 &4355837908731329658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4355837908731329600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b872ffe6519d0d49bba26ac4296d873, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  damageSprite: {fileID: 0}
-  scorePickup: {fileID: 4371030463298501313, guid: 7cc55d8bcc9031a43866378e27eb2023, type: 3}
+  m_Constraints: 0
