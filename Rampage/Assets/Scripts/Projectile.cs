@@ -52,6 +52,8 @@ public class Projectile : MonoBehaviour
             // Remove health from the enemy
             collision.gameObject.GetComponent<Enemy>().RemoveHealth(10);
 
+
+
             // Destroy bullet
             Destroy(gameObject);
         }

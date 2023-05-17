@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private int score;
 
     private int health = 100;
+   
 
     // Projectile Speed
     [SerializeField]
