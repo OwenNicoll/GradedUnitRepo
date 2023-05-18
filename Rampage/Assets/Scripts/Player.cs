@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     
     public Text fuelText;
     public Text healthText;
+    public Text scoreText;
 
     private bool burst = false;
     private float burstTimer;
@@ -180,7 +181,10 @@ public class Player : MonoBehaviour
         fuelText.text = "Fuel: " + fuel.ToString();
 
         // Health label
-        healthText.text = "Health " + health.ToString();
+        healthText.text = "Health: " + health.ToString();
+
+        // Score label
+        scoreText.text = "Score: " + score.ToString();
 
         // Start fire timer
         fireTimer += Time.deltaTime;
@@ -283,6 +287,12 @@ public class Player : MonoBehaviour
     public int GetHealth()
     {
         return health;
+    }
+
+    // Score setter
+    public void AddScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
     }
     public void SetHealth(int newHealth)
     {
