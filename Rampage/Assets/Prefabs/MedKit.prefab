@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5265761971076668858}
   - component: {fileID: 2271439226602691684}
   - component: {fileID: 8266684215242317406}
+  - component: {fileID: 3186508572030972936}
   m_Layer: 0
   m_Name: MedKit
   m_TagString: Untagged
@@ -114,3 +115,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8bab4dd7b5de54b82d376e22b2ade1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &3186508572030972936
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044537378130869297}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

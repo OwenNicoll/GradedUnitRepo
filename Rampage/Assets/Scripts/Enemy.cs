@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour
     protected GameObject scorePickup;
 
     [SerializeField]
+    protected GameObject shieldPowerup;
+
+    [SerializeField]
     protected GameObject fuelPowerup;
     [SerializeField]
     protected GameObject healthPowerup;
@@ -167,6 +170,10 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(burstPowerup, transform.position, Quaternion.identity);
     }
+    public void SpawnShield()
+    {
+        Instantiate(shieldPowerup, transform.position, Quaternion.identity);
+    }
 
     // Function to spawn powerups when enemy is killed
     public void SpawnPowerup()
@@ -177,20 +184,30 @@ public class Enemy : MonoBehaviour
         // 10% chance for a powerup to spawn
         if(spawnChance >= 0.9)
         {
-            if(spawnChance <= 0.94)
-            {
-                SpawnFuel();
-            }
-            if(spawnChance <= 0.98 && spawnChance >0.94)
-            {
-                SpawnHealth();
-            }
-           if(spawnChance > 0.98 && spawnChance <= 1)
+            // 1% chance for burst to spawn
+            if(spawnChance == 0.91)
             {
                 SpawnBurst();
             }
+
+            // 1% chance for shield to spawn
+            if(spawnChance == 0.92)
+            {
+                SpawnShield();
+            }
+
+            // 4% chance for health to spawn
+            else if (spawnChance <= 0.96)
+            {
+                SpawnHealth();
+            }
+
+            // 4% chance for fuel to spawn
+            else if(spawnChance <= 1)
+            {
+                SpawnFuel();
+            }
            
         }
-    }
-    
+    }    
 }

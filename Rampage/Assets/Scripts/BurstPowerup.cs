@@ -10,6 +10,10 @@ public class BurstPowerup : Powerup
         initialScale = transform.localScale;
 
         transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+
+        rb = GetComponent<Rigidbody2D>();
+
+        rb.AddForce(GetRandomForce());
     }
 
     // Update is called once per frame
