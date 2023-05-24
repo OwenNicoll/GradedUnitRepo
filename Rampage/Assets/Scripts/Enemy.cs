@@ -57,9 +57,7 @@ public class Enemy : MonoBehaviour
     {
         // Start Timers
         colourTimer += Time.deltaTime;
-
-        
-
+       
         // Change color back
         if (colourTimer >= 0.05f)
         {
@@ -114,11 +112,11 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check if enemy is hit by projectile
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            ChangeColour();
-           // health -= 20;
-           // Destroy(collision.gameObject);
+            // Change sprite colour
+            ChangeColour();      
         }
     }
 
@@ -127,18 +125,25 @@ public class Enemy : MonoBehaviour
         // Check for collision with player
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Remove health from player
-            collision.gameObject.GetComponent<Player>().RemoveHealth(10);
+            // Check if player shield is active
+            if (!collision.gameObject.GetComponent<Player>().GetShield())
+            {
+                // Remove health from player if shield is not active
+                collision.gameObject.GetComponent<Player>().RemoveHealth(10);
+            }
+            
         }
     }
 
+    // Function to change enemy sprite when hit
     protected void ChangeColour()
-    {
-       
+    {   
+        // Change sprite
         spriteRenderer.sprite = damageSprite;
         colourTimer = 0;
     }
 
+    
     
     public void RemoveHealth(int healthToRemove)
     {
@@ -162,10 +167,14 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(burstPowerup, transform.position, Quaternion.identity);
     }
+
+    // Function to spawn powerups when enemy is killed
     public void SpawnPowerup()
     {
+        // Get random spawn chance
         spawnChance = Random.Range(0f, 1f);
 
+        // 10% chance for a powerup to spawn
         if(spawnChance >= 0.9)
         {
             if(spawnChance <= 0.94)

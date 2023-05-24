@@ -70,6 +70,11 @@ public class Player : MonoBehaviour
     private float burstTimer;
     private float burstCooldown;
 
+    private bool shield = false;
+    private float shieldTimer = 0;
+
+    [SerializeField]
+    private GameObject shieldSprite;
 
 
 
@@ -185,6 +190,24 @@ public class Player : MonoBehaviour
 
         // Score label
         scoreText.text = "Score: " + score.ToString();
+
+        // Shield Timer
+        
+
+
+        if(shield)
+        {
+            shieldTimer += Time.deltaTime;
+
+            shieldSprite.GetComponent<SpriteRenderer>().enabled = true;
+
+            if (shieldTimer >= 10)
+            {
+                shieldSprite.GetComponent<SpriteRenderer>().enabled = false;
+                shield = false;
+                shieldTimer = 0;
+            }
+        }
 
         // Start fire timer
         fireTimer += Time.deltaTime;
@@ -305,5 +328,15 @@ public class Player : MonoBehaviour
     public void Burst()
     {
         burst = true;
+    }
+
+    public void Shield()
+    {
+        shield = true;
+    }
+
+    public bool GetShield()
+    {
+        return shield;
     }
 }

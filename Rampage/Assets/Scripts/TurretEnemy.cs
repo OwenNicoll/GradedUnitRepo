@@ -20,6 +20,8 @@ public class TurretEnemy : Enemy
 
     private GameObject player;
 
+    private bool canFire = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,17 @@ public class TurretEnemy : Enemy
     {
         fireTimer += Time.deltaTime;
 
-        if(distanceToPlayer <= 30f)
+        if(distanceToPlayer <= 10)
+        {
+            canFire = true;
+        }
+        else
+        {
+            canFire = false;
+        }
+
+
+        if(canFire)
         {
             if (fireTimer >= 3)
             {
@@ -42,9 +54,8 @@ public class TurretEnemy : Enemy
             direction = player.transform.position - rotatePoint.transform.position;
             rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             rotatePoint.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
-        }
 
-       
-        
+
+        }        
     }
 }
