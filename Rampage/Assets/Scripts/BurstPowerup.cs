@@ -27,6 +27,7 @@ public class BurstPowerup : Powerup
         {
             collision.gameObject.GetComponent<Player>().Burst();
             Destroy(gameObject);
+            
         }
     }
 }

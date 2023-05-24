@@ -139,6 +139,7 @@ public class Enemy : MonoBehaviour
         colourTimer = 0;
     }
 
+    
     public void RemoveHealth(int healthToRemove)
     {
         health -= healthToRemove;
