@@ -14,6 +14,8 @@ public class EnemyProjectile : MonoBehaviour
 
     private GameObject player;
 
+    private float rotationAngle;
+
 
 
     // Start is called before the first frame update
@@ -27,6 +29,9 @@ public class EnemyProjectile : MonoBehaviour
         playerTransform = player.transform;
 
         direction = (playerTransform.position - transform.position).normalized;
+
+        rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
 
     }
 

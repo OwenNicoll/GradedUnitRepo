@@ -31,9 +31,12 @@ public class TurretEnemy : Enemy
     // Update is called once per frame
     void Update()
     {
+        // Get player distance
+        distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+
         fireTimer += Time.deltaTime;
 
-        if(distanceToPlayer <= 10)
+        if(distanceToPlayer <= 50)
         {
             canFire = true;
         }

@@ -97,10 +97,10 @@ public class Enemy : MonoBehaviour
         }
 
         // Check if enemy is out of range
-        if(distanceToPlayer >= 100f)
+        if(distanceToPlayer >= 60)
         {
             despawnTimer += Time.deltaTime;
-            if (despawnTimer >= 5)
+            if (despawnTimer >= 3)
             {
                 Destroy(gameObject);
             }           
@@ -197,13 +197,13 @@ public class Enemy : MonoBehaviour
             }
 
             // 4% chance for health to spawn
-            else if (spawnChance <= 0.96)
+            else if (spawnChance > 0.92 && spawnChance <= 0.96)
             {
                 SpawnHealth();
             }
 
             // 4% chance for fuel to spawn
-            else if(spawnChance <= 1)
+            else if(spawnChance > 0.96 && spawnChance <= 1)
             {
                 SpawnFuel();
             }

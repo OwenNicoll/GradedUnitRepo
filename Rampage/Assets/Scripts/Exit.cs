@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
@@ -40,8 +41,27 @@ public class Exit : MonoBehaviour
         if (allGensDestroyed)
         {
             Debug.Log("Exit is open!");
+
         }
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if player collides with exit
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Check if all crystals are destroyed
+            if (allGensDestroyed)
+            {
+                // Set player health and fuel to 100
+                collision.gameObject.GetComponent<Player>().SetHealth(100);
+                collision.gameObject.GetComponent<Player>().SetFuel(100);
+
+                // Load next level
+                SceneManager.LoadScene("Level2");
+            }
+            
+        }
+    }
+
 }
