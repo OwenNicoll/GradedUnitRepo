@@ -15,6 +15,9 @@ public class TurretEnemy : Enemy
     [SerializeField]
     private GameObject firePoint;
 
+    [SerializeField]
+    private GameObject turretBarrel;
+
     private Vector3 direction;
     private float rotationAngle;
 
@@ -22,15 +25,25 @@ public class TurretEnemy : Enemy
 
     private bool canFire = false;
 
+    
     // Start is called before the first frame update
     void Start()
     {
+        health = 300;
+
         player = GameObject.FindWithTag("Player");
+
+        // Get sprite renderer
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        currentColor = spriteRenderer.color;
+
+        enemySprite = spriteRenderer.sprite;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         // Get player distance
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
@@ -58,7 +71,23 @@ public class TurretEnemy : Enemy
             rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             rotatePoint.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
 
+            
+        }
 
-        }        
+        // Check for enemy death
+        if (health <= 0)
+        {
+            SpawnScore();
+            Destroy(gameObject);
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
+        {
+            turretBarrel.GetComponent<Enemy>().ChangeColour();
+        }
     }
 }

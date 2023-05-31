@@ -139,7 +139,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Function to change enemy sprite when hit
-    protected void ChangeColour()
+    public void ChangeColour()
     {   
         // Change sprite
         spriteRenderer.sprite = damageSprite;
