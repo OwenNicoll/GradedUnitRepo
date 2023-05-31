@@ -45,6 +45,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            collision.gameObject.GetComponent<Player>().RemoveHealth(10);
             Destroy(gameObject);
         }
     }

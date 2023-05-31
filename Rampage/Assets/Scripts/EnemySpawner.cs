@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-
+    // 180, 360 = down
+    //90, 270 = left
+    //0, 180 = top
+    //
     private float minDistance = 50f;
     private float maxDistance = 52f;
     private float spawnChance;
@@ -17,10 +20,37 @@ public class EnemySpawner : MonoBehaviour
 
     private float spawnTimer;
 
+    private float randAngle;
+
     public Vector3 GetRandomPosition()
     {
+        // If player is moving right
+        if (gameObject.GetComponent<Player>().GetMovingRight() == true)
+        {
+            randAngle = Random.Range(-90, 90);
+        }
+
+        // If player is moving left
+        if (gameObject.GetComponent<Player>().GetMovingLeft() == true)
+        {
+           randAngle = Random.Range(90, 270);
+        }
+
+        // If player is moving up
+        if (gameObject.GetComponent<Player>().GetMovingUp() == true)
+        {
+            randAngle = Random.Range(0, 180);
+        }
+
+        // If player is moving down
+        if (gameObject.GetComponent<Player>().GetMovingDown() == true)
+        {
+            randAngle = Random.Range(180, 360);
+        }
+
+
         // Calculate random angle
-        float randAngle = Random.Range(0, 360);
+       // randAngle = Random.Range(-90, 90);
 
         // Calculate random distance
         float distance = Random.Range(minDistance, maxDistance);
@@ -36,14 +66,14 @@ public class EnemySpawner : MonoBehaviour
         // Generate random number
         spawnChance = Random.Range(0f, 1f);
 
-        // 90% chance to spawn regular enemy
-        if (spawnChance <= 0.9)
+        // 95% chance to spawn regular enemy
+        if (spawnChance <= 0.95)
         {
              Instantiate(enemy, position, Quaternion.identity);
             
         }
 
-        // 10% chance to spawn charger enemy
+        // 5% chance to spawn charger enemy
         else
         {
             Instantiate(chargerEnemy, position, Quaternion.identity);

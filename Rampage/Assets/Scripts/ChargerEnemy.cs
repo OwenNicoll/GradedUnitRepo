@@ -103,6 +103,7 @@ public class ChargerEnemy : Enemy
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            collision.gameObject.GetComponent<Player>().RemoveHealth(10);
             isBacktracking = true;
             backtrackTimer = 0;
         }

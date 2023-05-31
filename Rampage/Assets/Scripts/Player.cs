@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 
@@ -156,6 +157,7 @@ public class Player : MonoBehaviour
 
     }
 
+
     private void ShootLeft()
     {
         Instantiate(projectile, leftTransform.transform);
@@ -182,6 +184,12 @@ public class Player : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------
     void Update()
     {
+
+        if(health <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
         // Fuel label
         fuelText.text = "Fuel: " + fuel.ToString();
 
@@ -338,5 +346,25 @@ public class Player : MonoBehaviour
     public bool GetShield()
     {
         return shield;
+    }
+
+    public bool GetMovingUp()
+    {
+        return movingUp;
+    }
+
+    public bool GetMovingLeft()
+    {
+        return movingLeft;
+    }
+
+    public bool GetMovingRight()
+    {
+        return movingRight;
+    }
+
+    public bool GetMovingDown()
+    {
+        return movingDown;
     }
 }
