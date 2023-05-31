@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
+    //------------------------------------------------------------------------------------------------------------------------
+    // DATA
+    //------------------------------------------------------------------------------------------------------------------------
     [SerializeField]
     protected float moveSpeed = 5f;
     protected Rigidbody2D rb;
@@ -37,10 +41,20 @@ public class Enemy : MonoBehaviour
 
     protected float spawnChance;
 
+    protected GameObject[] powerupArray = new GameObject[4];
 
-    // Start is called before the first frame update
+
+    //------------------------------------------------------------------------------------------------------------------------
+    // START
+    //------------------------------------------------------------------------------------------------------------------------
     void Start()
     {
+        // Add powerups to array
+        powerupArray[0] = healthPowerup;
+        powerupArray[1] = fuelPowerup;
+        powerupArray[2] = burstPowerup;
+        powerupArray[3] = shieldPowerup;
+
         // Get rigid body
         rb = GetComponent<Rigidbody2D>();
 
@@ -55,7 +69,9 @@ public class Enemy : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    //------------------------------------------------------------------------------------------------------------------------
+    // UPDATE
+    //------------------------------------------------------------------------------------------------------------------------
     void Update()
     {
         // Start Timers
@@ -75,14 +91,12 @@ public class Enemy : MonoBehaviour
 
         if (distanceToPlayer > minDistance)
         {
-
             // Move towards player
             rb.MovePosition(rb.position + direction * moveSpeed);
         }
 
         if (distanceToPlayer < minDistance && distanceToPlayer != minDistance)
         {
-
             // Move away from player
             rb.MovePosition(rb.position - direction * moveSpeed);
         }
@@ -90,10 +104,7 @@ public class Enemy : MonoBehaviour
         // Check for enemy death
         if(health <= 0)
         {
-            SpawnScore();
-            SpawnPowerup();
-            
-            Destroy(gameObject);
+            KillEnemy();
         }
 
         // Check if enemy is out of range
@@ -112,7 +123,9 @@ public class Enemy : MonoBehaviour
             despawnTimer = 0;
         }
     }
-
+    //------------------------------------------------------------------------------------------------------------------------
+    // FUNCTIONS
+    //------------------------------------------------------------------------------------------------------------------------
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if enemy is hit by projectile
@@ -158,22 +171,6 @@ public class Enemy : MonoBehaviour
         Instantiate(scorePickup, transform.position, Quaternion.identity);
     }
 
-    public void SpawnFuel()
-    {
-        Instantiate(fuelPowerup, transform.position, Quaternion.identity);
-    }
-    public void SpawnHealth()
-    {
-        Instantiate(healthPowerup, transform.position, Quaternion.identity);
-    }
-    public void SpawnBurst()
-    {
-        Instantiate(burstPowerup, transform.position, Quaternion.identity);
-    }
-    public void SpawnShield()
-    {
-        Instantiate(shieldPowerup, transform.position, Quaternion.identity);
-    }
 
     // Function to spawn powerups when enemy is killed
     public void SpawnPowerup()
@@ -182,32 +179,21 @@ public class Enemy : MonoBehaviour
         spawnChance = Random.Range(0f, 1f);
 
         // 10% chance for a powerup to spawn
-        if(spawnChance >= 0.9)
+        if(spawnChance >= 0.95)
         {
-            // 1% chance for burst to spawn
-            if(spawnChance == 0.91)
-            {
-                SpawnBurst();
-            }
-
-            // 1% chance for shield to spawn
-            if(spawnChance == 0.92)
-            {
-                SpawnShield();
-            }
-
-            // 4% chance for health to spawn
-            else if (spawnChance > 0.92 && spawnChance <= 0.96)
-            {
-                SpawnHealth();
-            }
-
-            // 4% chance for fuel to spawn
-            else if(spawnChance > 0.96 && spawnChance <= 1)
-            {
-                SpawnFuel();
-            }
-           
+            RandomDrop();
         }
-    }    
+    }       
+    public void RandomDrop()
+    {
+        int randChance = Random.Range(0, powerupArray.Length);
+        Instantiate(powerupArray[randChance], transform.position, Quaternion.identity);
+    }
+    
+    public void KillEnemy()
+    {
+        SpawnScore();
+        SpawnPowerup();
+        Destroy(gameObject);
+    }
 }

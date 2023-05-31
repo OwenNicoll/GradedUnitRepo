@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
      private bool movingLeft;
      private bool movingUp;
      private bool movingDown;
+     private bool standingStill;
 
     
     public Text fuelText;
@@ -155,6 +156,15 @@ public class Player : MonoBehaviour
             movingDown = false;
         }
 
+        if((verticalInput == 0) && (horizontalInput ==0))
+        {
+            standingStill = true;
+        }
+        else
+        {
+            standingStill = false;
+        }
+
     }
 
 
@@ -185,9 +195,9 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        if(health <= 0)
+        if(health <= 0 || fuel <=0)
         {
-            SceneManager.LoadScene("GameOver");
+            Death();
         }
 
         // Fuel label
@@ -366,5 +376,15 @@ public class Player : MonoBehaviour
     public bool GetMovingDown()
     {
         return movingDown;
+    }
+
+    public bool GetStandingStill()
+    {
+        return standingStill;
+    }
+
+    private void Death()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 }

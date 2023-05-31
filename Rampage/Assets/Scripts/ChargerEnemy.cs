@@ -83,9 +83,7 @@ public class ChargerEnemy : Enemy
         // Check for enemy death
         if (health <= 0)
         {
-            SpawnScore();
-            SpawnPowerup();
-            Destroy(gameObject);
+            KillEnemy();
         }
     }
 

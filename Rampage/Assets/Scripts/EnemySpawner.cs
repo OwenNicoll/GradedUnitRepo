@@ -27,30 +27,38 @@ public class EnemySpawner : MonoBehaviour
         // If player is moving right
         if (gameObject.GetComponent<Player>().GetMovingRight() == true)
         {
+            // Spawn enemies to right of player
             randAngle = Random.Range(-90, 90);
         }
 
         // If player is moving left
         if (gameObject.GetComponent<Player>().GetMovingLeft() == true)
         {
+            // Spawn enemies to left of player
            randAngle = Random.Range(90, 270);
         }
 
         // If player is moving up
         if (gameObject.GetComponent<Player>().GetMovingUp() == true)
         {
+            // Spawn enemies above player
             randAngle = Random.Range(0, 180);
         }
 
         // If player is moving down
         if (gameObject.GetComponent<Player>().GetMovingDown() == true)
         {
+            // Spawn enemies below player
             randAngle = Random.Range(180, 360);
         }
 
+        // If player is stationary
+        if (gameObject.GetComponent<Player>().GetStandingStill() == true)
+        {
+            // Spawn enemies all around player
+            randAngle = Random.Range(0, 360);
+        }
 
-        // Calculate random angle
-       // randAngle = Random.Range(-90, 90);
 
         // Calculate random distance
         float distance = Random.Range(minDistance, maxDistance);
