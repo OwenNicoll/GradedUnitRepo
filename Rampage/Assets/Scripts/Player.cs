@@ -200,12 +200,7 @@ public class Player : MonoBehaviour
             Death();
         }
 
-        // Fuel label
-        fuelText.text = "Fuel: " + fuel.ToString();
-
-        // Health label
-        healthText.text = "Health: " + health.ToString();
-
+       
         // Score label
         scoreText.text = "Score: " + score.ToString();
 

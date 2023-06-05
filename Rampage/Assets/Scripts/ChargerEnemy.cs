@@ -93,8 +93,6 @@ public class ChargerEnemy : Enemy
         if (collision.gameObject.CompareTag("Projectile"))
         {
             ChangeColour();
-            // health -= 20;
-            // Destroy(collision.gameObject);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
