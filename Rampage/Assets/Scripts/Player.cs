@@ -75,6 +75,11 @@ public class Player : MonoBehaviour
     private bool shield = false;
     private float shieldTimer = 0;
 
+    private float horizontalInput;
+    private float verticalInput;
+
+    private Vector2 direction;
+
     [SerializeField]
     private GameObject shieldSprite;
 
@@ -108,8 +113,8 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         // Get axis inputs
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+         horizontalInput = Input.GetAxisRaw("Horizontal");
+         verticalInput = Input.GetAxisRaw("Vertical");
 
         Vector2 velocity = new Vector2(horizontalInput, verticalInput).normalized;
 
@@ -194,6 +199,9 @@ public class Player : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------
     void Update()
     {
+         direction = new Vector2(horizontalInput, verticalInput);
+        
+
 
         if(health <= 0 || fuel <=0)
         {
@@ -202,7 +210,7 @@ public class Player : MonoBehaviour
 
        
         // Score label
-        scoreText.text = "Score: " + score.ToString();
+        scoreText.text = score.ToString();
 
         // Shield Timer
         
@@ -381,5 +389,10 @@ public class Player : MonoBehaviour
     private void Death()
     {
         SceneManager.LoadScene("GameOver");
+    }
+
+    public Vector2 GetDirection()
+    {
+        return direction;
     }
 }

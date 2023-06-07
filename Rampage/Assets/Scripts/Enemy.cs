@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     protected float distanceToPlayer;
     protected SpriteRenderer spriteRenderer;
     protected Color currentColor;
-    protected int health = 50;
+    protected int health = 60;
 
     protected float despawnTimer;
 
@@ -41,7 +41,11 @@ public class Enemy : MonoBehaviour
 
     protected float spawnChance;
 
+    private GameObject player;
+
     protected GameObject[] powerupArray = new GameObject[4];
+
+    
 
 
     //------------------------------------------------------------------------------------------------------------------------
@@ -60,6 +64,9 @@ public class Enemy : MonoBehaviour
 
         // Get player transform
         playerTransform = GameObject.FindWithTag("Player").transform;
+
+        player = GameObject.FindWithTag("Player");
+
 
         // Get sprite renderer
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -89,10 +96,15 @@ public class Enemy : MonoBehaviour
         // Get player distance
         distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
+        Vector2 playerPosition = playerTransform.position;
+
+        
+
+
         if (distanceToPlayer > minDistance)
         {
             // Move towards player
-            rb.MovePosition(rb.position + direction * moveSpeed);
+            rb.MovePosition(rb.position + direction + player.GetComponent<Player>().GetDirection() * moveSpeed);         
         }
 
         if (distanceToPlayer < minDistance && distanceToPlayer != minDistance)
@@ -179,7 +191,7 @@ public class Enemy : MonoBehaviour
         spawnChance = Random.Range(0f, 1f);
 
         // 10% chance for a powerup to spawn
-        if(spawnChance >= 0.95)
+        if(spawnChance >= 0.90)
         {
             RandomDrop();
         }
@@ -193,7 +205,7 @@ public class Enemy : MonoBehaviour
     public void KillEnemy()
     {
         SpawnScore();
-        SpawnPowerup();
+        SpawnPowerup();       
         Destroy(gameObject);
     }
 }
