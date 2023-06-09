@@ -406,7 +406,7 @@ public class Player : MonoBehaviour
 
     private void Death()
     {
-        SceneManager.LoadScene("GameOver");
+        //SceneManager.LoadScene("GameOver");
     }
 
     public Vector2 GetDirection()

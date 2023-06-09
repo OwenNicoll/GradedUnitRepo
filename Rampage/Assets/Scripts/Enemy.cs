@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     // DATA
     //------------------------------------------------------------------------------------------------------------------------
     [SerializeField]
-    protected float moveSpeed = 5f;
+    protected float moveSpeed = 2f;
     protected Rigidbody2D rb;
     protected Transform playerTransform;
     protected float minDistance = 3f;
@@ -120,10 +120,10 @@ public class Enemy : MonoBehaviour
         }
 
         // Check if enemy is out of range
-        if(distanceToPlayer >= 60)
+        if(distanceToPlayer >= 53)
         {
             despawnTimer += Time.deltaTime;
-            if (despawnTimer >= 3)
+            if (despawnTimer >= 1)
             {
                 Destroy(gameObject);
             }           
@@ -191,7 +191,7 @@ public class Enemy : MonoBehaviour
         spawnChance = Random.Range(0f, 1f);
 
         // 10% chance for a powerup to spawn
-        if(spawnChance >= 0.92)
+        if(spawnChance >= 0.95)
         {
             RandomDrop();
         }

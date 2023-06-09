@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
         spawnChance = Random.Range(0f, 1f);
 
         // 95% chance to spawn regular enemy
-        if (spawnChance <= 0.95)
+        if (spawnChance <= 0.995)
         {
              Instantiate(enemy, position, Quaternion.identity);
             
@@ -98,7 +98,7 @@ public class EnemySpawner : MonoBehaviour
         spawnTimer += Time.deltaTime;
 
         // Check if it is time to spawn enemy
-        if (spawnTimer >= 1)
+        if (spawnTimer >= 0.33)
         {
             SpawnEnemy(GetRandomPosition());
             spawnTimer = 0;

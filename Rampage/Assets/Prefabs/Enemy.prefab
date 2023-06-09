@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 769380762837222503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.2, y: -3.86, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe80c6d2980e4ae47a4d14a6318e759f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.15
+  moveSpeed: 0.1
   damageSprite: {fileID: 21300000, guid: c5a2c2fe69884d84aa9ef72ccadd1dba, type: 3}
   scorePickup: {fileID: 4371030463298501313, guid: 7cc55d8bcc9031a43866378e27eb2023, type: 3}
   shieldPowerup: {fileID: 4973551504868608529, guid: 54372ce434dd42c4fa6dff10a50aeefb, type: 3}
@@ -140,6 +140,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.038513184, y: -0.012837648}
+  m_Offset: {x: 0.03426906, y: -0.012837683}
   serializedVersion: 2
-  m_Radius: 1.4265835
+  m_Radius: 1.3629194

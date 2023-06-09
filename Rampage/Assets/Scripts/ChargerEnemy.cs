@@ -104,4 +104,7 @@ public class ChargerEnemy : Enemy
             backtrackTimer = 0;
         }
     }
+
+
+    
 }
