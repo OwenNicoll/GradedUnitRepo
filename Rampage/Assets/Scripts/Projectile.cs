@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
 
     private float destroyTimer;
 
+    private int pierceCounter = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,13 +51,20 @@ public class Projectile : MonoBehaviour
         // Check if the bullet collided with an enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            // Increase pierce counter
+            pierceCounter++;
+
             // Remove health from the enemy
             collision.gameObject.GetComponent<Enemy>().RemoveHealth(10);
             collision.gameObject.GetComponent<Enemy>().ChangeColour();
            
-
-            // Destroy bullet
-            Destroy(gameObject);
+            // Check if bullet has already hit an enemy
+            if(pierceCounter >= 2)
+            {
+                // Destroy bullet
+                Destroy(gameObject);
+            }
+          
         }
     }
 

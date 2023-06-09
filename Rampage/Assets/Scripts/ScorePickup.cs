@@ -25,7 +25,7 @@ public class ScorePickup : MonoBehaviour
         // Get distance to player
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        if (distanceToPlayer <= 12.5f)
+        if (distanceToPlayer <= 20)
         {
             // Move towards player
             rb.MovePosition(rb.position + direction * moveSpeed);

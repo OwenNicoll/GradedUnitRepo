@@ -64,8 +64,7 @@ public class Player : MonoBehaviour
      private bool standingStill;
 
     
-    public Text fuelText;
-    public Text healthText;
+  
     public Text scoreText;
 
     private bool burst = false;
@@ -82,6 +81,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject shieldSprite;
+
+    private bool invunrable = false;
+    private float invunrableTimer;
 
 
 
@@ -304,6 +306,16 @@ public class Player : MonoBehaviour
                 burst = false;
             }
         }
+
+        // Start invunrable period
+        invunrableTimer += Time.deltaTime;
+
+        if(invunrableTimer >= 0.5f)
+        {
+            invunrable = false;
+        }
+
+
     }
     //--------------------------------------------------------------------------------------------------------------------------------------
     //  METHODS
@@ -344,7 +356,13 @@ public class Player : MonoBehaviour
     }
     public void RemoveHealth(int healthToRemove)
     {
-        health -= healthToRemove;
+        if (!invunrable)
+        {
+            health -= healthToRemove;
+            invunrable = true;
+            invunrableTimer = 0;
+        }
+       
     }
     public void Burst()
     {

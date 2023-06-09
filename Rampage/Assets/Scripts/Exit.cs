@@ -7,6 +7,10 @@ public class Exit : MonoBehaviour
 {
     private GameObject[] generatorArray = new GameObject[3];
     private bool allGensDestroyed = false;
+    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer arrowSpriteRenderer;
+
+    [SerializeField] private GameObject exitArrow;
     
 
     // Start is called before the first frame update
@@ -16,6 +20,12 @@ public class Exit : MonoBehaviour
         generatorArray[0] = GameObject.Find("Crystal1");
         generatorArray[1] = GameObject.Find("Crystal2");
         generatorArray[2] = GameObject.Find("Crystal3");
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = false;
+
+        arrowSpriteRenderer = exitArrow.GetComponent<SpriteRenderer>();
+        arrowSpriteRenderer.enabled = false;
     }
 
     // Update is called once per frame
@@ -40,8 +50,13 @@ public class Exit : MonoBehaviour
 
         if (allGensDestroyed)
         {
-            Debug.Log("Exit is open!");
-
+            spriteRenderer.enabled = true;
+            arrowSpriteRenderer.enabled = true;
+        }
+        else
+        {
+            spriteRenderer.enabled = false;
+            arrowSpriteRenderer.enabled = false;
         }
     }
 
