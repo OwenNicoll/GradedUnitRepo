@@ -13,7 +13,8 @@ public class Sound
     [Range(0f, 1f)]
     public float volime;
 
-    [Range(0.5f, 1.5f)]
+    public bool loop;
+
     public float pitch;
 
     [HideInInspector]

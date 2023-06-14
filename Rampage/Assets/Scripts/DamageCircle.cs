@@ -5,15 +5,19 @@ using UnityEngine;
 public class DamageCircle : MonoBehaviour
 {
 
-    private bool isDamaging;
+    private bool isDamaging = false;
     private float damageTimer = 0;
     private float despawnTimer = 0;
     private SpriteRenderer spriteRenderer;
+   
+
+
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         damageTimer = 0;
+         
     }
 
     // Update is called once per frame
@@ -30,6 +34,20 @@ public class DamageCircle : MonoBehaviour
         if (damageTimer >= 5f)
         {
             Destroy(gameObject);
+        }
+
+       
+        
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (isDamaging)
+            {
+                collision.gameObject.GetComponent<Player>().RemoveHealth(10);
+            }
         }
     }
 }

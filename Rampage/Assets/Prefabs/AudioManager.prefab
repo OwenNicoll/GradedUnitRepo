@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5204886237847400676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5204886237847400678}
+  - component: {fileID: 5204886237847400677}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5204886237847400678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204886237847400676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.89489, y: -0.6372142, z: -4.1330953}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5204886237847400677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204886237847400676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7d489e1e08ce045988fd781992b715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundArray:
+  - name: Gunshot
+    clip: {fileID: 8300000, guid: c39993c7005aac54d840ee22aa263ff1, type: 3}
+    volime: 0.075
+    loop: 0
+    pitch: 0.654
+    source: {fileID: 0}
+  - name: PlayerDamage
+    clip: {fileID: 8300000, guid: f6ef03797f6b7684ea2ab8eaad391ad0, type: 3}
+    volime: 0.5
+    loop: 0
+    pitch: 0.654
+    source: {fileID: 0}
+  - name: GameMusic
+    clip: {fileID: 8300000, guid: 93c359f917eed8446a28de70ad5f1f50, type: 3}
+    volime: 0.1
+    loop: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Hitmarker
+    clip: {fileID: 8300000, guid: dde58a585e7d50b438b40fd01817b155, type: 3}
+    volime: 0.1
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: ShieldUp
+    clip: {fileID: 8300000, guid: 37178641a7a5737429439c0ded17c4a8, type: 3}
+    volime: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: Burst
+    clip: {fileID: 8300000, guid: a0061d67b90226b458c705f3f0dc8771, type: 3}
+    volime: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 8300000, guid: f4eedd0c62e69124884b5e9b88f2e352, type: 3}
+    volime: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: Fuel
+    clip: {fileID: 8300000, guid: 92511fc0dc72d704a8056d76f62d0889, type: 3}
+    volime: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: Laser
+    clip: {fileID: 8300000, guid: ce7ba18c1d1f38941bd3bfef9d90abf1, type: 3}
+    volime: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: Score
+    clip: {fileID: 8300000, guid: 9a712d9e7aac78c44bac0d2625e5fc84, type: 3}
+    volime: 0.25
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: 83a994784ecc83e408972ed90ed0f371, type: 3}
+    volime: 0.1
+    loop: 1
+    pitch: 1
+    source: {fileID: 0}

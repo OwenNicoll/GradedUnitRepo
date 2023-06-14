@@ -8,7 +8,7 @@ public class EnemyProjectile : MonoBehaviour
     private Rigidbody2D rb;
 
     private Transform playerTransform;
-    private float moveSpeed = 100f;
+    private float moveSpeed = 50f;
 
     private Vector3 direction;
 

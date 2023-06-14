@@ -18,7 +18,6 @@ public class TurretEnemy : Enemy
     [SerializeField]
     private GameObject turretBarrel;
 
-    private Vector3 direction;
     private float rotationAngle;
 
     private GameObject player;
@@ -63,23 +62,16 @@ public class TurretEnemy : Enemy
         {
             if (fireTimer >= 3)
             {
-                Instantiate(enemyProjectile, firePoint.transform.position, Quaternion.identity);
-                fireTimer = 0;
+                Shoot();
             }
 
-            direction = player.transform.position - rotatePoint.transform.position;
-            rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            rotatePoint.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
 
+            RotateBarrel();
             
         }
 
         // Check for enemy death
-        if (health <= 0)
-        {
-            SpawnScore();
-            Destroy(gameObject);
-        }
+        CheckForDeath();
 
     }
 
@@ -89,5 +81,19 @@ public class TurretEnemy : Enemy
         {
             turretBarrel.GetComponent<Enemy>().ChangeColour();
         }
+    }
+
+    private void Shoot()
+    {
+        Instantiate(enemyProjectile, firePoint.transform.position, Quaternion.identity);
+        fireTimer = 0;
+        FindObjectOfType<AudioManager>().PlayRandPitch("Laser");
+    }
+
+    private void RotateBarrel()
+    {
+        direction = player.transform.position - rotatePoint.transform.position;
+        rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rotatePoint.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
     }
 }

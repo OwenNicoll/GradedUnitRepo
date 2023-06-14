@@ -7,11 +7,12 @@ public class Menu : MonoBehaviour
 {
 
     [SerializeField] private string targetScene;
+    [SerializeField] private string targetScene2;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        FindObjectOfType<AudioManager>().Play("MenuMusic");
     }
 
     // Update is called once per frame
@@ -21,10 +22,13 @@ public class Menu : MonoBehaviour
         {
             SceneManager.LoadScene(targetScene);
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            SceneManager.LoadScene(targetScene2);
+        }
+       
     }
 
-    private void LoadNextLevel()
-    {
-
-    }
+   
 }

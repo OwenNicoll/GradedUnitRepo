@@ -11,6 +11,9 @@ public class Exit : MonoBehaviour
     private SpriteRenderer arrowSpriteRenderer;
 
     [SerializeField] private GameObject exitArrow;
+    [SerializeField] private string targetLevel;
+
+
     
 
     // Start is called before the first frame update
@@ -73,7 +76,7 @@ public class Exit : MonoBehaviour
                 collision.gameObject.GetComponent<Player>().SetFuel(100);
 
                 // Load next level
-                SceneManager.LoadScene("Level2");
+                SceneManager.LoadScene(targetLevel);
             }
             
         }

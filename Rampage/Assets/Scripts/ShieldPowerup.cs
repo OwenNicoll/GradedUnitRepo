@@ -30,6 +30,8 @@ public class ShieldPowerup : Powerup
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player>().Shield();
+            FindObjectOfType<AudioManager>().Play("ShieldUp");
+
             Destroy(gameObject);
         }
     }

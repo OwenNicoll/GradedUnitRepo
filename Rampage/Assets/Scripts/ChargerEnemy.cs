@@ -50,12 +50,39 @@ public class ChargerEnemy : Enemy
         }
 
         // Get player direction
-        Vector2 direction = (playerTransform.position - transform.position).normalized;
+         direction = (playerTransform.position - transform.position).normalized;
 
         // Get player distance
         distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
+        // Move toward player
+        MoveTowardPlayer();
+        
 
+        // Check for enemy death
+        CheckForDeath();
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
+        {
+            ChangeColour();
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<Player>().RemoveHealth(10);
+            isBacktracking = true;
+            backtrackTimer = 0;
+        }
+    }
+
+    protected override void MoveTowardPlayer()
+    {
         // Check if backtracking is false
         if (!isBacktracking)
         {
@@ -79,32 +106,8 @@ public class ChargerEnemy : Enemy
                 isBacktracking = false;
             }
         }
-
-        // Check for enemy death
-        if (health <= 0)
-        {
-            KillEnemy();
-        }
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Projectile"))
-        {
-            ChangeColour();
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<Player>().RemoveHealth(10);
-            isBacktracking = true;
-            backtrackTimer = 0;
-        }
-    }
 
-
-    
 }

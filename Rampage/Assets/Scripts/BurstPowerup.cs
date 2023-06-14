@@ -30,6 +30,7 @@ public class BurstPowerup : Powerup
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player>().Burst();
+            FindObjectOfType<AudioManager>().Play("Burst");
             Destroy(gameObject);
             
         }

@@ -38,6 +38,7 @@ public class ScorePickup : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player>().AddScore(10);
+            FindObjectOfType<AudioManager>().PlayRandPitch("Score");
             Destroy(gameObject);
         }
     }

@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volime;
             s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
         }
     }
 
@@ -24,5 +25,12 @@ public class AudioManager : MonoBehaviour
     {
        Sound s = Array.Find(soundArray, sound => sound.name == name);
        s.source.Play();
+    }
+
+    public void PlayRandPitch(string name)
+    {
+        Sound s = Array.Find(soundArray, sound => sound.name == name);
+        s.source.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        s.source.Play();
     }
 }

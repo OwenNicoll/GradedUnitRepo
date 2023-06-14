@@ -8,12 +8,12 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-
+    // Health
     private int score;
 
+    // Score
     private int health = 100;
    
-
     // Projectile Speed
     [SerializeField]
     private float moveSpeed = 27.5f;
@@ -21,11 +21,12 @@ public class Player : MonoBehaviour
     // RigidBody
     private Rigidbody2D rb;
 
-    // Projectile object
+    // Projectile prefab
     [SerializeField]
     private GameObject projectile;
 
-    // Fire point transorms
+    
+    // Projectile spawn points
     [SerializeField]
     private Transform leftTransform;
     [SerializeField]
@@ -52,20 +53,20 @@ public class Player : MonoBehaviour
 
     // Fuel
     private int fuel = 100;
-    private float fuelDrainRate = 1f;
     private float fuelTimer = 0;
 
 
-
+     // Movement bools for enemy spawner
      private bool movingRight;
      private bool movingLeft;
      private bool movingUp;
      private bool movingDown;
      private bool standingStill;
 
-    
-  
-    public Text scoreText;
+
+    // Score Text
+    [SerializeField]
+    private TMP_Text scoreText;
 
     private bool burst = false;
     private float burstTimer;
@@ -95,22 +96,14 @@ public class Player : MonoBehaviour
         // Get Rigid body
         rb = GetComponent<Rigidbody2D>();
 
-        // Get projectile
-       // projectile = GameObject.FindWithTag("Projectile");
-
+        // Start background music
+        FindObjectOfType<AudioManager>().Play("GameMusic");
+              
     }
 
-    // Function to set rigid body velocity
-    void SetVelocity(float xVel, float yVel)
-    {
-        rb.velocity = new Vector2(xVel * moveSpeed, yVel * moveSpeed);
-    }
-
-    void SpawnProjectile(Transform spawnPoint1, Transform spawnPoint2)
-    {
-        Instantiate(projectile, spawnPoint1.transform);
-        Instantiate(projectile, spawnPoint2.transform);
-    }
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    //  FIXED UPDATE
+    //--------------------------------------------------------------------------------------------------------------------------------------
 
     void FixedUpdate()
     {
@@ -175,6 +168,145 @@ public class Player : MonoBehaviour
     }
 
 
+
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    //  UPDATE
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    void Update()
+    {
+
+        // Timers
+        fireTimer += Time.deltaTime;
+        shieldTimer += Time.deltaTime;
+       
+        invunrableTimer += Time.deltaTime;
+
+
+        // Set direction
+        direction = new Vector2(horizontalInput, verticalInput);
+
+
+        // Check if cooldown has passed....
+        if (fireTimer >= 0.1f)
+        {
+            // Allow player to shoot
+            canFire = true;
+        }
+
+
+        // Check for user input
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.J))
+        {
+            if (canFire)
+            {
+                ShootLeft();
+                canFire = false;
+                fireTimer = 0;
+                FindObjectOfType<AudioManager>().PlayRandPitch("Gunshot");
+            }
+
+        }
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.L))
+        {
+            if (canFire)
+            {
+                ShootRight();
+                canFire = false;
+                fireTimer = 0;
+                FindObjectOfType<AudioManager>().PlayRandPitch("Gunshot");
+            }
+
+        }
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.K))
+        {
+            if (canFire)
+            {
+                ShootDown();
+                canFire = false;
+                fireTimer = 0;
+                FindObjectOfType<AudioManager>().PlayRandPitch("Gunshot");
+            }
+        }
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.I))
+        {
+            if (canFire)
+            {
+                ShootUp();
+                canFire = false;
+                fireTimer = 0;
+                FindObjectOfType<AudioManager>().PlayRandPitch("Gunshot");
+            }
+        }
+
+        // Check for player death
+        CheckForDeath();
+
+
+        // Check if player is shielded
+        if (shield)
+        {
+            // Enable shield renderer
+            shieldSprite.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        // Check if shield has been active for 10s
+        if (shieldTimer >= 10)
+        {
+            // Remove shield
+            RemoveShield();
+        }
+
+        // Update Score label
+        scoreText.text = score.ToString();
+
+       
+                        
+        // Drain fuel
+        fuelTimer += Time.deltaTime;
+        DrainFuel();
+
+        // Check if player has burst powerup   
+        if (burst)
+        {
+            burstCooldown += Time.deltaTime;
+            burstTimer += Time.deltaTime;
+
+
+            // Fire in all directions every 0.1s
+            if (burstTimer >= 0.1)
+            {
+                ShootLeft();
+                ShootRight();
+                ShootUp();
+                ShootDown();
+                burstTimer = 0;
+                FindObjectOfType<AudioManager>().PlayRandPitch("Gunshot");
+            }
+
+            // Check if 5s has passed
+            if(burstCooldown >= 5)
+            {
+                // End burst
+                burstCooldown = 0;
+                burst = false;
+            }
+        }
+
+              
+        // If player has been invunrable for 0.5s
+        if(invunrableTimer >= 0.5f)
+        {
+            // Set invunrable to false
+            invunrable = false;
+        }
+    }
+
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------
+    //  METHODS
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    // Functions for shooting
     private void ShootLeft()
     {
         Instantiate(projectile, leftTransform.transform);
@@ -196,132 +328,10 @@ public class Player : MonoBehaviour
         Instantiate(projectile, downTransform2.transform);
     }
 
-    //--------------------------------------------------------------------------------------------------------------------------------------
-    //  UPDATE
-    //--------------------------------------------------------------------------------------------------------------------------------------
-    void Update()
-    {
-         direction = new Vector2(horizontalInput, verticalInput);
-        
-
-
-        if(health <= 0 || fuel <=0)
-        {
-            Death();
-        }
-
-       
-        // Score label
-        scoreText.text = score.ToString();
-
-        // Shield Timer
-        
-        
-
-        if(shield)
-        {
-            shieldTimer += Time.deltaTime;
-
-            shieldSprite.GetComponent<SpriteRenderer>().enabled = true;
-
-            if (shieldTimer >= 10)
-            {
-                shieldSprite.GetComponent<SpriteRenderer>().enabled = false;
-                shield = false;
-                shieldTimer = 0;
-            }
-        }
-
-        // Start fire timer
-        fireTimer += Time.deltaTime;
-
-        // Check if cooldown has passed....
-        if (fireTimer >= 0.1f)
-        {
-            // Allow player to shoot
-            canFire = true;
-        }
-
-        // Drain fuel
-        fuelTimer += Time.deltaTime;
-        DrainFuel();
-
-        // Check for shoot inputs
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            if (canFire)
-            {
-                ShootLeft();
-                canFire = false;
-                fireTimer = 0;
-            }
-
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            if (canFire)
-            {
-                ShootRight();
-                canFire = false;
-                fireTimer = 0;
-            }
-
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            if (canFire)
-            {
-                ShootDown();
-                canFire = false;
-                fireTimer = 0;
-            }
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            if (canFire)
-            {
-                ShootUp();
-                canFire = false;
-                fireTimer = 0;
-            }
-        }
-
-        
-        if (burst)
-        {
-            
-            burstCooldown += Time.deltaTime;
-            burstTimer += Time.deltaTime;
-            if(burstTimer >= 0.1)
-            {
-                ShootLeft();
-                ShootRight();
-                ShootUp();
-                ShootDown();
-                burstTimer = 0;
-            }
-            if(burstCooldown >= 5)
-            {
-                burstCooldown = 0;
-                burst = false;
-            }
-        }
-
-        // Start invunrable period
-        invunrableTimer += Time.deltaTime;
-
-        if(invunrableTimer >= 0.5f)
-        {
-            invunrable = false;
-        }
-
-
-    }
-    //--------------------------------------------------------------------------------------------------------------------------------------
-    //  METHODS
-    //--------------------------------------------------------------------------------------------------------------------------------------
+    // Drain fuel
     private void DrainFuel()
     {
+        // Reduce fuel by 1 every second
         if (fuelTimer >= 1)
         {
             fuel -= 1;
@@ -329,20 +339,30 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Fuel setter + getter
+    // Fuel getter
     public int GetFuel()
     {
         return fuel;
     }
+
+    // Fuel setter
     public void SetFuel(int newAmount)
     {
         fuel = newAmount;
+        FindObjectOfType<AudioManager>().Play("Fuel");
     }
 
-    // Health Setter + Getter
+    // Health Getter
     public int GetHealth()
     {
         return health;
+    }
+
+    // Health setter
+    public void SetHealth(int newHealth)
+    {
+        health = newHealth;
+        FindObjectOfType<AudioManager>().Play("Heal");
     }
 
     // Score setter
@@ -350,67 +370,117 @@ public class Player : MonoBehaviour
     {
         score += scoreToAdd;
     }
-    public void SetHealth(int newHealth)
-    {
-        health = newHealth;
-    }
+
+    // Remove health
     public void RemoveHealth(int healthToRemove)
     {
-        if (!invunrable)
+        if (!invunrable && !shield)
         {
             health -= healthToRemove;
             invunrable = true;
             invunrableTimer = 0;
+            FindObjectOfType<AudioManager>().PlayRandPitch("PlayerDamage");
         }
        
     }
+
+    // Burst 
     public void Burst()
     {
         burst = true;
+
     }
 
+    // Shield
     public void Shield()
     {
         shield = true;
+        shieldTimer = 0;
     }
-
     public bool GetShield()
     {
         return shield;
     }
 
+    // Moving up
     public bool GetMovingUp()
     {
         return movingUp;
     }
 
+    // Moving Left
     public bool GetMovingLeft()
     {
         return movingLeft;
     }
 
+    // Moving Right
     public bool GetMovingRight()
     {
         return movingRight;
     }
 
+    // Moving Down
     public bool GetMovingDown()
     {
         return movingDown;
     }
 
+    // Standing Still
     public bool GetStandingStill()
     {
         return standingStill;
     }
 
+    // Death
     private void Death()
     {
-        //SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("GameOver");
     }
 
+    // Check for death
+    private void CheckForDeath()
+    {
+        if(health <= 0 || fuel <= 0)
+        {
+            Death();
+        }
+    }
+
+    // Get direction
     public Vector2 GetDirection()
     {
         return direction;
+    }
+
+    // Set velocity
+    void SetVelocity(float xVel, float yVel)
+    {
+        rb.velocity = new Vector2(xVel * moveSpeed, yVel * moveSpeed);
+    }
+
+    
+    // Show Shield
+    private void ShowShield()
+    {
+        // Enable shield renderer
+        shieldSprite.GetComponent<SpriteRenderer>().enabled = true;
+
+        // Reset timer
+        shieldTimer = 0;
+
+       
+    }
+
+    private void RemoveShield()
+    {
+
+        // Disable shield Renderer
+        shieldSprite.GetComponent<SpriteRenderer>().enabled = false;
+
+        // Set shield to false
+        shield = false;
+
+        shieldTimer = 0;
     }
 }

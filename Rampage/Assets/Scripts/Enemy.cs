@@ -41,6 +41,8 @@ public class Enemy : MonoBehaviour
 
     protected float spawnChance;
 
+    protected Vector2 direction;
+
     
 
     protected GameObject[] powerupArray = new GameObject[4];
@@ -65,7 +67,6 @@ public class Enemy : MonoBehaviour
         // Get player transform
         playerTransform = GameObject.FindWithTag("Player").transform;
 
-        
 
 
         // Get sprite renderer
@@ -83,41 +84,27 @@ public class Enemy : MonoBehaviour
     {
         // Start Timers
         colourTimer += Time.deltaTime;
+
+        ReturnColor();
        
-        // Change color back
-        if (colourTimer >= 0.05f)
-        {
-            spriteRenderer.sprite = enemySprite;
-        }
 
         // Get player direction
-        Vector2 direction = (playerTransform.position - transform.position).normalized;
+         direction = (playerTransform.position - transform.position).normalized;
 
         // Get player distance
         distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
-      
-
-        
 
 
-        if (distanceToPlayer > minDistance)
-        {
-            // Move towards player
-            rb.MovePosition(rb.position + direction * moveSpeed);         
-        }
+        // Move to player
+        MoveTowardPlayer();
 
-        if (distanceToPlayer < minDistance && distanceToPlayer != minDistance)
-        {
-            // Move away from player
-            rb.MovePosition(rb.position - direction * moveSpeed);
-        }
+
+
+
 
         // Check for enemy death
-        if(health <= 0)
-        {
-            KillEnemy();
-        }
+        CheckForDeath();
 
         // Check if enemy is out of range
         if(distanceToPlayer >= 53)
@@ -171,11 +158,21 @@ public class Enemy : MonoBehaviour
         colourTimer = 0;
     }
 
+    protected void ReturnColor()
+    {
+        // Change color back
+        if (colourTimer >= 0.05f)
+        {
+            spriteRenderer.sprite = enemySprite;
+        }
+    }
+
     
     
     public void RemoveHealth(int healthToRemove)
     {
         health -= healthToRemove;
+        FindObjectOfType<AudioManager>().PlayRandPitch("Hitmarker");
     }
 
     public void SpawnScore()
@@ -202,10 +199,32 @@ public class Enemy : MonoBehaviour
         Instantiate(powerupArray[randChance], transform.position, Quaternion.identity);
     }
     
-    public void KillEnemy()
+    public virtual void KillEnemy()
     {
         SpawnScore();
         SpawnPowerup();       
         Destroy(gameObject);
+    }
+
+    protected void CheckForDeath()
+    {
+        if(health <= 0)
+        {
+            KillEnemy();
+        }
+    }
+    protected virtual void MoveTowardPlayer()
+    {
+        if (distanceToPlayer > minDistance)
+        {
+            // Move towards player
+            rb.MovePosition(rb.position + direction * moveSpeed);
+        }
+
+        if (distanceToPlayer < minDistance && distanceToPlayer != minDistance)
+        {
+            // Move away from player
+            rb.MovePosition(rb.position - direction * moveSpeed);
+        }
     }
 }
